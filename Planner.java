@@ -8,16 +8,23 @@ public class Planner {
        plan1[0] = "CHM 215 Lecture";
        plan1[1] = "COS 226 Precept";
        plan1[2] = "MAT 202 Help Session";
-       StdOut.println(Arrays.toString(plan1));
+       // StdOut.println(Arrays.toString(plan1));
        plan.put("Todd", plan1);
-       StdOut.println(plan);
+       // StdOut.println(plan);
+       
+    
        
        
     }
 
 
 public static void main(String[] args) {
-    Planner() ;
-    
+     Planner plann = new Planner() ;
+     String[] empty = new String[5] ;
+     
+     for (int i = 0 ; i < 5; i++) {
+         StdOut.println("Item " + i); 
+         empty[i] = StdIn.readString() ;
+     }
 }
 }
