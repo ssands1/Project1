@@ -38,7 +38,9 @@ public class Clock
         if (colonIndex == -1)
             throw new IllegalArgumentException("Please enter a time in valid HH:MM fomat.");
         hour = Integer.parseInt(time.substring(0, colonIndex));
-        minute = Integer.parseInt(time.substring(colonIndex + 1, time.length()));
+        if (time.toLowerCase().contains("pm"))
+            hour += 12;
+        minute = Integer.parseInt(time.substring(colonIndex + 1, colonIndex + 3));
         if (hour < 0 || hour > 23 || minute < 0 || minute > 59) {
             throw new IllegalArgumentException("Minutes must be between 0 and "
                                               + "59 inclusive and hours must be"

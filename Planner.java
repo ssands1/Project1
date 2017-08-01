@@ -1,11 +1,10 @@
 import java.util.* ;
-//import java.util.regex.MatchResult;
 
 public class Planner {
-    private static Hashtable<Clock, String> activityLs; //time for an activity
+    private static Map<String, Clock> activityLs; //time for an activity
     public static String name;
     public  Planner() {
-        activityLs = new Hashtable<Clock, String> ();
+        activityLs = new TreeMap<String, Clock> ();
         
     }
         
@@ -16,25 +15,25 @@ public class Planner {
         String time;
     
         System.out.println("Name: ") ;
-        name = scan.next();
+        name = scan.nextLine();
         
         for (int i = 1; true ; i++) {
             String activity = "";
             System.out.println("Item " + i);
             System.out.println("Activity: ");
-            //MatchResult result = scan.match();
-            //for (int j=1; j<=result.groupCount(); j++)
-              //  System.out.println(result.groupCount());
-            activity = scan.next();
+            activity = scan.nextLine();
             if (activity.equalsIgnoreCase("end") || activity.equalsIgnoreCase("stop") || activity.equalsIgnoreCase("cancel"))
                 break;
             System.out.println("Time: ");
-            time = scan.next();
+            time = scan.nextLine();
             Clock clock = new Clock(time);
-            activityLs.put(clock, activity);
+            activityLs.put(activity, clock);
         } 
-        System.out.println("\n" + name);
-        System.out.println(activityLs.toString()) ;
         scan.close();
+
+        //Map<String, Clock> timeline = new TreeMap<String, Clock>(activityLs);
+        System.out.println("\n" + name);
+        System.out.println(activityLs.toString());
+        //System.out.println(timeline.toString());
     }
 }
