@@ -1,39 +1,47 @@
 import java.util.* ;
+//import java.util.regex.MatchResult;
 
 public class Planner {
-    private static Map<String, Clock> activityLs; //time for an activity
     public static String name;
-    public  Planner() {
-        activityLs = new TreeMap<String, Clock> ();
-        
+    private static Map<String, String> activityLs; // <time, activity>
+    
+    public  Planner(String n) {
+        name = n;
+        activityLs = new TreeMap<String, String> ();
     }
-        
+
+    public static void add(String time, String activity) {
+        Clock clock = new Clock(time);
+        activityLs.put(clock.toString(), activity);
+         
+    }
+
+    public static String get(String time) {
+        Clock clock = new Clock(time);
+        return activityLs.get(clock.toString());
+    }
+
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        Planner p = new Planner();
-        
-        String time;
     
         System.out.println("Name: ") ;
-        name = scan.nextLine();
-        
+        String n = scan.nextLine();
+        Planner p = new Planner(n);
+        String lastAdded = "if you read this, no events were entered";
         for (int i = 1; true ; i++) {
-            String activity = "";
-            System.out.println("Item " + i);
-            System.out.println("Activity: ");
-            activity = scan.nextLine();
+            System.out.println("Activity " + i + ": ");
+            String activity = scan.nextLine();
             if (activity.equalsIgnoreCase("end") || activity.equalsIgnoreCase("stop") || activity.equalsIgnoreCase("cancel"))
                 break;
             System.out.println("Time: ");
-            time = scan.nextLine();
-            Clock clock = new Clock(time);
-            activityLs.put(activity, clock);
-        } 
-        scan.close();
+            String time = scan.nextLine();
+            p.add(time, activity);
+            lastAdded = p.get(time);
+        }
 
-        //Map<String, Clock> timeline = new TreeMap<String, Clock>(activityLs);
+        scan.close();
         System.out.println("\n" + name);
-        System.out.println(activityLs.toString());
-        //System.out.println(timeline.toString());
+        System.out.println(activityLs.toString()) ;       
+        System.out.println(lastAdded);
     }
 }

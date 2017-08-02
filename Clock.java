@@ -34,18 +34,23 @@ public class Clock
     // using the format HH:MM
     public Clock(String time)
     {
-        int colonIndex = time.indexOf(58);
-        if (colonIndex == -1)
-            throw new IllegalArgumentException("Please enter a time in valid HH:MM fomat.");
-        hour = Integer.parseInt(time.substring(0, colonIndex));
-        if (time.toLowerCase().contains("pm"))
-            hour += 12;
-        minute = Integer.parseInt(time.substring(colonIndex + 1, colonIndex + 3));
-        if (hour < 0 || hour > 23 || minute < 0 || minute > 59) {
-            throw new IllegalArgumentException("Minutes must be between 0 and "
-                                              + "59 inclusive and hours must be"
-                                              + " between 0 and 23 inclusive");
+        int colonIndex = time.indexOf(58); //58 is ASCII colon number
+        if (colonIndex == -1) {
+            hour = Integer.parseInt(time.substring(0,2));
+            minute = 0;
+        } else {            
+            hour = Integer.parseInt(time.substring(0, colonIndex));
+            minute = Integer.parseInt(time.substring(colonIndex + 1, colonIndex + 3));
+            if (hour < 0 || hour > 23 || minute < 0 || minute > 59) {
+                throw new IllegalArgumentException("Minutes must be between 0 and "
+                                                  + "59 inclusive and hours must be"
+                                                  + " between 0 and 23 inclusive");
+            }
         }
+        if (time.toLowerCase().contains("pm") && hour != 12)
+            hour += 12;
+        else if (hour == 12 && time.toLowerCase().contains("am"))
+            hour = 0;
     }
     
     // returns a string representation of this clock, using the format HH:MM
