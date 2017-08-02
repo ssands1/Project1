@@ -1,35 +1,39 @@
 import java.util.* ;
+
 public class Planner {
-    private static Hashtable<Integer, String> activity_ls; //time for an activity
-    
+    private static Map<String, Clock> activityLs; //time for an activity
+    public static String name;
     public  Planner() {
-        activity_ls = new Hashtable<Integer, String> ();
+        activityLs = new TreeMap<String, Clock> ();
         
     }
-    
-    /*public String toString() {
-        for (Hashtable plan: activity_ls) {
-            plan.get(name);
-        }
-    }*/
-    
+        
     public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
         Planner p = new Planner();
-        StdOut.println("Name: ") ;
         
-        String name = StdIn.readString() ;
-        Integer time = 0;
-        String activity = "";
-        for (int i = 0; !activity.equals("End") ; i++) {
+        String time;
+    
+        System.out.println("Name: ") ;
+        name = scan.nextLine();
+        
+        for (int i = 1; true ; i++) {
+            String activity = "";
             System.out.println("Item " + i);
-            System.out.println("Time: ");
-            time = StdIn.readInt();
             System.out.println("Activity: ");
-            activity = StdIn.readString();
-            activity_ls.put(time, activity);
-        }
-        System.out.println(name);
-        System.out.println(activity_ls.toString()) ;
-        
+            activity = scan.nextLine();
+            if (activity.equalsIgnoreCase("end") || activity.equalsIgnoreCase("stop") || activity.equalsIgnoreCase("cancel"))
+                break;
+            System.out.println("Time: ");
+            time = scan.nextLine();
+            Clock clock = new Clock(time);
+            activityLs.put(activity, clock);
+        } 
+        scan.close();
+
+        //Map<String, Clock> timeline = new TreeMap<String, Clock>(activityLs);
+        System.out.println("\n" + name);
+        System.out.println(activityLs.toString());
+        //System.out.println(timeline.toString());
     }
 }
