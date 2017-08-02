@@ -46,16 +46,16 @@ public class TaskManager {
             System.out.println("Priority: ");
             priority = sc.nextInt();
             
-            try{
+            /*try{
                 Thread.sleep((long) 1000);
                 
             }catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 // code for stopping current task so thread stops
-            }
+            }*/
             
             System.out.println("Task: ");
-            String task = sc.nextLine();
+            String task = sc.next();
             
             tm.add_task(priority, task);
             
