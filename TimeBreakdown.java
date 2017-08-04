@@ -4,9 +4,9 @@ import java.text.*;
 // Saves time commitments in a hashtable and allows users to view the sum of the time spent 
 // and the breakdown
 public class TimeBreakdown {
-    private static Hashtable<String, Double> time; //<task, time estimation>
-    private static Hashtable<String, String> category_ls; // <task, category>
-    private static Double sum; // sum of all task inputed
+    public static Hashtable<String, Double> time; //<task, time estimation>
+    public static Hashtable<String, String> category_ls; // <task, category>
+    public static Double sum; // sum of all task inputed
     
     public  TimeBreakdown() {
         time = new Hashtable<String, Double>();
@@ -14,7 +14,12 @@ public class TimeBreakdown {
         sum = 0.00;
     }
     
-    // sums total time and time breakdown in percents
+    //returns sum
+    public Double sumIt(){
+        return sum;
+    }
+    
+    // outputs time for each task and time breakdown in percents
     public void totaltime() {
         NumberFormat formatter = new DecimalFormat("#0.00");
         
@@ -24,7 +29,7 @@ public class TimeBreakdown {
             for (String key : keys) {
                 Double duration = time.get(key);
                 Double percent = (duration/sum) * 100.00;
-                System.out.println(key + ": " + formatter.format(duration) + " min " + formatter.format(percent) + "%");
+                System.out.println(key + ": " + formatter.format(duration) + " hr " + formatter.format(percent) + "%");
                 System.out.println("Category: " + category_ls.get(key));
             }
         }
