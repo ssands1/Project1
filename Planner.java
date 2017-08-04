@@ -3,17 +3,19 @@ import java.util.* ;
 
 public class Planner {
     public static String name;
-    private static Map<String, String> activityLs; // <time, activity>
+    private static Map<String, String> activityLs; // <start time, activity>
+    private static Map<String, Integer> activityTime; // <activity, duration>
     
     public  Planner(String n) {
         name = n;
         activityLs = new TreeMap<String, String> ();
+        activityTime = new TreeMap<String, Integer> ();
     }
 
-    public static void add(String time, String activity) {
+    public static void add(String time, String activity, Integer duration) {
         Clock clock = new Clock(time);
         activityLs.put(clock.toString(), activity);
-         
+        activityTime.put(activity, duration);
     }
 
     public static String get(String time) {
@@ -33,9 +35,11 @@ public class Planner {
             String activity = scan.nextLine();
             if (activity.equalsIgnoreCase("end") || activity.equalsIgnoreCase("stop") || activity.equalsIgnoreCase("cancel"))
                 break;
-            System.out.println("Time: ");
+            System.out.println("Start Time: ");
             String time = scan.nextLine();
-            p.add(time, activity);
+            System.out.println("Duration: ");
+            Integer duration = scan.nextInt();
+            p.add(time, activity, duration);
             lastAdded = p.get(time);
         }
 

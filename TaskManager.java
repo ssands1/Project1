@@ -1,68 +1,68 @@
 import java.util.* ;
-import java.util.concurrent.TimeUnit;
+
 public class TaskManager {
-    private static Hashtable<Integer, String> taskManager; //TaskManager for user
+    private static Hashtable<String, Double> time; // <task, time estimation>
+    private static Hashtable<String, Boolean> completed; // <task, complete?>
+    private static Hashtable<String, Double> deadline_ls; // <task, time until deadline>
     
+    // initialize everything 
     public  TaskManager() {
-        taskManager = new Hashtable<Integer, String> ();
+        time = new Hashtable<String, Double>();
+        completed = new Hashtable<String, Boolean>();
+        deadline_ls = new Hashtable<String, Double>();
     }
     
-    //place new task as priority n, move all other task down a priority
-    public void add_task(Integer priority, String task) {
-        String oldTask = "";
-        Stack oldTasks = new Stack();
-        
-        // push all task w/ lower priority than inserted task onto stack
-        if (taskManager != null) {
-            if (!taskManager.isEmpty()) {
-                Set<Integer> keys = taskManager.keySet();
-                for (Integer key : keys) {
-                    if (key >= priority) {
-                        oldTask = taskManager.get(key);
-                        oldTasks.push((String) oldTask);
-                    }
-                }
-                
-                int size = taskManager.size();
-                
-                // place task back one priortity lower than original
-                for (int i = priority; i < size; i++) {
-                    String temp_task = (String) oldTasks.pop();
-                    taskManager.put (i + 1, temp_task);
-                } 
-            }
-            taskManager.put(priority, task);
+    // add a new task
+    public void add_task(String task, Double estimation, Double deadline) {
+        time.put(task, estimation);
+        deadline_ls.put(task, deadline);
+        completed.put(task, false);
+    }
+    
+    // mark a task as complete
+    public static void complete(String task) {
+        completed.put(task, true);
+    }
+    
+    // check if a task is complete
+    public String status(String task) {
+        if (completed.get(task)){
+            return "Complete";
+        }else{
+            return "Incomplete";
         }
     }
+    
+    // print all task w/ times and deadlines
+    public String toString() {
+        Set<String> keys = time.keySet();
+        for (String key : keys) {
+            System.out.println("Task: " + key);
+            System.out.println("Estimated Task Time: " + time.get(key) + " hr");
+            System.out.println("Time Until Deadline: " + deadline_ls.get(key) + " hr");
+            System.out.println("Status: " + status(key));
+        }
+        return "";
+    }
+    
     private static Scanner sc = new Scanner(System.in); // System in
     
     public static void main(String[] args) {
         TaskManager tm = new TaskManager();
-        // System.out.println("Name: ") ;
-        // String name = sc.nextLine() ;
-        Integer priority = 1;
-        for (int i = 0; !priority.equals(0) ; i++) {
-            
-            System.out.println("Priority: ");
-            priority = sc.nextInt();
-            
-            /*try{
-                Thread.sleep((long) 1000);
-                
-            }catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                // code for stopping current task so thread stops
-            }*/
-            
-            System.out.println("Task: ");
+        
+        for (int i = 1; true ; i++) {
+            System.out.println("Task " + i + ": ");
             String task = sc.next();
-            
-            tm.add_task(priority, task);
-            
-            if (taskManager != null) {
-                taskManager.put(priority, task);
-            }
+            if (task.equalsIgnoreCase("end") || task.equalsIgnoreCase("stop") || task.equalsIgnoreCase("cancel"))
+                break;
+            System.out.println("How long will this task take? (in hrs)");
+            Double estimation = sc.nextDouble();
+            System.out.println("How much time do you have to complete this task? (in hrs)");
+            Double deadline = sc.nextDouble();
+            tm.add_task(task, estimation, deadline);
         }
-        System.out.print(taskManager.toString());
+        System.out.print(tm.toString());
+        complete("Eat");
+        System.out.print(tm.toString());
     }
 }
