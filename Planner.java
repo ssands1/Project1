@@ -3,24 +3,24 @@ import java.util.* ;
 
 public class Planner {
     public static String name;
-    private static Map<String, String> activityLs; // <start time, activity>
-    private static Map<String, Integer> activityTime; // <activity, duration>
+    public static Map<String, String> activityLs; // <start time, activity>
+    public static Map<String, Double> activityTime; // <activity, duration>
     
     public  Planner(String n) {
         name = n;
-        activityLs = new TreeMap<String, String> ();
-        activityTime = new TreeMap<String, Integer> ();
+        this.activityLs = new TreeMap<String, String> ();
+        this.activityTime = new TreeMap<String, Double> ();
     }
 
-    public static void add(String time, String activity, Integer duration) {
+    public void add(String time, String activity, Double duration) {
         Clock clock = new Clock(time);
-        activityLs.put(clock.toString(), activity);
-        activityTime.put(activity, duration);
+        this.activityLs.put(clock.toString(), activity);
+        this.activityTime.put(activity, duration);
     }
 
-    public static String get(String time) {
+    public String get(String time) {
         Clock clock = new Clock(time);
-        return activityLs.get(clock.toString());
+        return this.activityLs.get(clock.toString());
     }
 
     public static void main(String[] args) {
@@ -38,14 +38,14 @@ public class Planner {
             System.out.println("Start Time: ");
             String time = scan.nextLine();
             System.out.println("Duration: ");
-            Integer duration = scan.nextInt();
+            Double duration = scan.nextDouble();
             p.add(time, activity, duration);
             lastAdded = p.get(time);
         }
-
+        
         scan.close();
         System.out.println("\n" + name);
-        System.out.println(activityLs.toString()) ;       
+        // System.out.println(activityLs.toString()) ;       
         System.out.println(lastAdded);
     }
 }

@@ -1,9 +1,9 @@
 import java.util.* ;
 
 public class TaskManager {
-    private static Hashtable<String, Double> time; // <task, time estimation>
-    private static Hashtable<String, Boolean> completed; // <task, complete?>
-    private static Hashtable<String, Double> deadline_ls; // <task, time until deadline>
+    public static Hashtable<String, Double> time; // <task, time estimation>
+    public static Hashtable<String, Boolean> completed; // <task, complete?>
+    public static Hashtable<String, Double> deadline_ls; // <task, time until deadline>
     
     // initialize everything 
     public  TaskManager() {

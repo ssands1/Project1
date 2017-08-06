@@ -3,10 +3,10 @@ import java.util.* ;
 // Saves future time committments time commitments in a hashtable and allows users to view the sum of the time spent 
 // and the breakdown
 public class WorkForecast {
-    private static TimeBreakdown tb; //TimeBreakdown Object
-    private static Hashtable<String, Double> time; //<task, time estimation>
-    private static Hashtable<String, String> category_ls; // <task, category>
-    private static Double sum; // sum of all task inputed
+    public static TimeBreakdown tb; //TimeBreakdown Object
+    public static Hashtable<String, Double> time; //<task, time estimation>
+    public static Hashtable<String, String> category_ls; // <task, category>
+    public static Double sum; // sum of all task inputed
     
     public  WorkForecast() {
         tb = new TimeBreakdown();
