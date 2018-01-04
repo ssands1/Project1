@@ -2,9 +2,9 @@ import java.util.*;
 
 public class Simply {
     // Declare for Planner
-    public Planner p; // Planner Object
+    public static Planner p; // Planner Object
     public String name;
-    private Map<String, String> activityLs; // <start time, activity>
+    /*private Map<String, String> activityLs; // <start time, activity>
     private Map<String, Double> activityTime; // <activity, duration>*/
     
     // Declare for TaskManager
@@ -21,10 +21,10 @@ public class Simply {
      private static Double sum; // sum of all task inputed*/
     
     
-    public Simply(String name){
+    public Simply(String n){
         //initialize for Planner
-        p = new Planner(name);
-        
+        p = new Planner(n);
+        name = n;
         //initialize for TaskManager
         tm = new TaskManager();
         /*tm.time = new Hashtable<String, Double>();
@@ -32,10 +32,12 @@ public class Simply {
          tm.deadline_ls = new Hashtable<String, Double>();*/
         
         //initialize for TimeBreakdown & WorkForecast
+        work = new WorkForecast();
         tb = new TimeBreakdown();
         /*tb.time = new Hashtable<String, Double>();
          tb.category_ls = new Hashtable<String, String>();
          tb.sum = 0.00;*/
+        
     }
     
     /* logins into app
@@ -61,8 +63,8 @@ public class Simply {
         System.out.println();
         tb.timePerCategory();
         System.out.println();
-        System.out.println("Free Time: " + work.free_time() + " hr " + work.quality_time(work.free_time()));
-        System.out.println("Work Time: " + work.work_time() + " hr ");
+        System.out.println("Free Time: " + work.free_time(tb) + " hr " + work.quality_time(work.free_time(tb)));
+        System.out.println("Work Time: " + work.work_time(tb) + " hr \n");
     }
     
     // marks a task as complete
@@ -74,19 +76,21 @@ public class Simply {
     public static void task_list() {
         Set<String> keys = tm.completed.keySet();
         for (String key: keys) {
-            System.out.println(tm.status(key));
+            System.out.println(key + ": " + tm.status(key));
         }
     }
     
     // shows all events
-    public void view_planner(String lastAdded) {
-        System.out.println("\n" + name);
-        System.out.println(activityLs.toString()) ;       
-        System.out.println(lastAdded);
+    public void view_planner() {
+        System.out.print ("\n");
+        System.out.println(name);
+        System.out.println(p.activityLs.toString()) ;       
+        // System.out.println(lastAdded);
     }
+    
     private static Scanner sc = new Scanner(System.in); // System in
     
-    public void main(String[] args) {
+    public static void main(String[] args) {
         System.out.println("Name: ") ;
         String n = sc.nextLine();
         Simply sim = new Simply(n);
@@ -125,11 +129,12 @@ public class Simply {
             }
         }
         
-        if (p != null) {
+        sim.view_planner();
+        /*if (p != null) {
             sim.view_planner(lastAdded);
-        }
+        }*/
         
-        System.out.println("General Time Report" + "/n");
+        System.out.println("\nGeneral Time Report\n");
         sim.timeReport();
         
         // print task list, then complete a tasl, then print again

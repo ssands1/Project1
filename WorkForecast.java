@@ -16,14 +16,13 @@ public class WorkForecast {
     }
     
     //free time assuming no calendar events for a given period
-    public Double free_time() {
-        Double fT = 24 - tb.sumIt();  //free time assuming no calendar events
-            return fT;
+    public Double free_time(TimeBreakdown timeB) {
+        return (24 - timeB.sumIt());  //free time assuming no calendar events
+     
     }     
     
-    public Double work_time() {
-        Double wT = tb.sumIt(); //total time for all text in a given period
-        return wT;
+    public Double work_time(TimeBreakdown timeBreak) {
+        return timeBreak.sumIt(); //total time for all text in a given period
     } 
     
     public String quality_time(Double n) {
@@ -57,8 +56,8 @@ public class WorkForecast {
         }
         tb.totaltime();
         tb.timePerCategory();
-        System.out.println("Free Time: " + work.free_time() + " hr " + work.quality_time(work.free_time()));
-        System.out.println("Work Time: " + work.work_time() + " hr ");
+        System.out.println("Free Time: " + work.free_time(tb) + " hr " + work.quality_time(work.free_time(tb)));
+        System.out.println("Work Time: " + work.work_time(tb) + " hr ");
         
     }
 }
